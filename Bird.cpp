@@ -142,7 +142,10 @@ void display() {
     );
     */
     glTranslatef(posX, posY , 0);
-    glRotatef(90, 0, 1, 0);
+    glRotatef(75, 0, 1, 0);
+
+  
+
 
   
     glColor3f(1, 0.84, 0.75);
@@ -180,48 +183,35 @@ void display() {
     glEnd();
 
     
-
     glPushMatrix();
 
     glRotatef(leftWing, 0, 0, 1);
 
-    glBegin(GL_QUADS);
-
-    glColor3f(0.1,1,0.1);
-
     float xOffset = 0.35f;
+    glColor3f(0.1, 1, 0.1);
 
-    glVertex2f(-0.1- 2*xOffset, 0.05);
-    glVertex2f(0.1- xOffset, 0.05);
-    glVertex2f(0.1- xOffset, -0.05);
-    glVertex2f(-0.1- 2*xOffset, -0.05);
 
-    glEnd();
-
+    glTranslatef(0.0f - xOffset, -0.1f, 0.0f);
+    //glRotatef(leftWing, -1.0f, 0.0f, 0.0f);
+    glScalef(1.0f, 0.2f, 0.2f);  // Ellipse shape
+    glutSolidSphere(0.2, 16, 16);
     glPopMatrix();
+
 
     glPushMatrix();
 
-
     glRotatef(-leftWing, 0, 0, 1);
-    glBegin(GL_QUADS);
 
-    glVertex2f(-0.1+ xOffset, 0.05);
-    glVertex2f(0.1+ 2*xOffset, 0.05);
-    glVertex2f(0.1+ 2*xOffset, -0.05);
-    glVertex2f(-0.1+ xOffset, -0.05);
-    
-    
-
-   
-
-    glEnd();
-    
-
-   
+    xOffset = 0.35f;
+    glColor3f(0.1, 1, 0.1);
 
 
+    glTranslatef(0.0f + xOffset , -0.1f, 0.0f);
+    //glRotatef(leftWing, -1.0f, 0.0f, 0.0f);
+    glScalef(1.0f, 0.2f, 0.2f);  // Ellipse shape
+    glutSolidSphere(0.2, 16, 16);
     glPopMatrix();
+
 
     glPopMatrix();
 
