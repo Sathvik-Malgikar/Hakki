@@ -9,29 +9,8 @@
 
 using namespace std;
 
-//Body Measurments found to work
-#define STEP 0.1
-#define TORSO_HEIGHT 6.0
-#define TORSO_RADIUS 2.0
-#define UPPER_ARM_HEIGHT 3.0
-#define UPPER_ARM_RADIUS  0.5
-#define LOWER_ARM_HEIGHT 2.5
-#define LOWER_ARM_RADIUS  0.5
-#define UPPER_LEG_HEIGHT 4.0
-#define UPPER_LEG_RADIUS  0.6
-#define LOWER_LEG_HEIGHT 3.5
-#define LOWER_LEG_RADIUS  0.6
-#define ELBOW_RADIUS 0.6
-#define KNEE_RADIUS 0.7
-#define HAND_RADIUS 0.6
-#define FOOT_RADIUS 0.7
-#define SHOULDER_RADIUS 0.8
-#define HEAD_HEIGHT 1.5
-#define HEAD_RADIUS 1.0
-#define NECK_HEIGHT 1.0
-#define NECK_RADIUS 0.4
 
-//null refrance for linking
+
 #define zzero 0
 
 //gloabal variables needed
