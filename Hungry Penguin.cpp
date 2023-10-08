@@ -203,14 +203,27 @@ void mainshape()
 
 void sky()
 {
+
 	glBegin(GL_QUADS);
-	glColor4f(0.686, 0.933, 0.933, 0);
+	glColor3f(0.686, 0.933, 0.933);
 	glVertex2f(-1.0f, -1.0f);
 	glVertex2f(1.0f, -1.0f);
 	glVertex2f(1.0f, 1.0f);
 	glVertex2f(-1.0f, 1.0f);
 	glEnd();
+
 }
+
+void sun()
+{
+
+	glColor3f(1.0, 1.0, 0.0);
+	glPushMatrix();
+	glTranslatef(0.85, 0.85, 0.0);
+	glutSolidSphere(0.1, 100, 100);
+	glPopMatrix();
+}
+
 void cloud1()
 {
 	// glLoadIdentity();
@@ -360,7 +373,7 @@ void cloud2()
 
 
 }
- 
+
 
 void bird()
 {
@@ -447,6 +460,56 @@ void glacier2()
 
 
 }
+bool eaten = false;
+void fish1()
+{
+
+	if (!eaten) {
+
+		setMaterial(0.0, 0.5, 0, 0.0, 0.5, 0, 0, 0, 0, 15);
+		glColor3f(0.2, 0.2, 0.2);
+		//left fish
+		//body
+		glColor3f(1.0, 0.0, 0.0);  // Red color
+		glPushMatrix();
+		glTranslatef(-0.85, -0.35, -1.3);
+		glutSolidSphere(0.09, 100, 100);
+		glPopMatrix();
+
+		// Tail of the fish (triangle)
+		glColor3f(1.0, 0.0, 0.0);  // Red color
+		glPushMatrix();
+		glTranslatef(-0.9, -0.35, -1.3);
+		glBegin(GL_TRIANGLES);
+		glVertex2f(0.0, 0.0);
+		glVertex2f(-0.1, 0.05);
+		glVertex2f(-0.1, -0.05);
+		glEnd();
+		glPopMatrix();
+	}
+
+
+	//right fish
+	//body
+	glColor3f(1.0, 0.0, 0.0);  // Red color
+	glPushMatrix();
+	glTranslatef(0.85, -0.45, -1.3);
+	glutSolidSphere(0.09, 100, 100);
+	glPopMatrix();
+
+	// Tail of the fish (triangle)
+	glColor3f(1.0, 0.0, 0.0);  // Red color
+	glPushMatrix();
+	glTranslatef(0.9, -0.45, -1.3);
+	glBegin(GL_TRIANGLES);
+	glVertex2f(0.0, 0.0);
+	glVertex2f(0.1, 0.05);
+	glVertex2f(0.1, -0.05);
+	glEnd();
+	glPopMatrix();
+
+}
+
 
 void glacier3()
 {
@@ -594,7 +657,10 @@ void drawCone() {
 }
 
 
+bool waving = false;
+
 void drawAll() {
+
 
 
 	//head
@@ -635,6 +701,16 @@ void drawAll() {
 	glRotatef(90, 1, 0, 0);
 	glScalef(1, 1.4, 1);
 	drawCone();
+	if (waving) {
+
+		setMaterial(0.0, 0.5, 0, 0.0, 0.5, 0, 1, 0, 0, 15);
+		glColor3f(1, 0, 0);
+		glPushMatrix();
+		glScalef(1, 1.4, 1);
+		glutSolidSphere(0.2, 40, 40);
+		glPopMatrix();
+
+	}
 	glPopMatrix();
 
 	////stomach
@@ -662,7 +738,7 @@ void drawAll() {
 	glutSolidSphere(0.3f, 40, 40);
 	glPopMatrix();
 
-	glPushMatrix(); 
+	glPushMatrix();
 	glRotatef(waveOffset, 0, 0, 1);
 	glTranslatef(1, 0, -1.3);
 	glRotatef(-30, 0, 1, 0);
@@ -688,13 +764,13 @@ void drawAll() {
 		glRotatef(25, 1, 0, 0);
 	}
 	glScalef(0.4, 1.5, 0.3);
-	glTranslatef(1, 0.8 , -8);
+	glTranslatef(1, 0.8, -8);
 	drawCuboid();
 	glPopMatrix();
 
 }
 
-float xpos=-4, ypos=0, zpos;
+float xpos = -4, ypos = 0, zpos;
 
 
 float tiltAngle = 0;
@@ -706,12 +782,15 @@ GLfloat yOffset = 0, xOffset = 0;
 void display() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	 
+
 
 	glLineWidth(2);
 	sky();
+	sun();
+	glutSwapBuffers();
 	glPushMatrix();
 	glTranslatef(position, 0.0f, 0.0f);
+
 	cloud1();
 	cloud2();
 	bird();
@@ -722,54 +801,44 @@ void display() {
 	water();
 	glacier1();
 	glacier3();
-	//glacier1();
-
-	//glacier2();
-	//stairs();
-	//pool();
-	//flags();
-
-
-	//field();
-
-	 
-
+	fish1();
 	glPushMatrix();
-	
 
-	glTranslatef(xpos + xOffset/3, ypos + yOffset/3 + heightOffset/2 , zpos );
-	glTranslatef(0,0,-2.5);
-	glTranslatef( 5.4  , -1.8 , -4);
+
+	glTranslatef(xpos + xOffset / 3, ypos + yOffset / 3 + heightOffset / 2, zpos);
+	glTranslatef(0, 0, -2.5);
+	glTranslatef(5.4, -1.8, -4);
 	if (!facingRight) {
 		//glScalef(1, -1, 1); 
 		glRotatef(35, 0, 1, 0);
 	}
-	 
-	glRotatef((tiltAngle -10 )/2, 0, 1, 0);
-	glRotatef(290, 1, 0, 0); 
-	glRotatef(-20, 0, 0, 1); 
+
+	glRotatef((tiltAngle - 10) / 2, 0, 1, 0);
+	glRotatef(290, 1, 0, 0);
+	glRotatef(-20, 0, 0, 1);
 	glScalef(-0.4, -0.4, 0.4);
-	
-	glTranslatef(0,0,2.5);
+
+	glTranslatef(0, 0, 2.5);
 	drawAll();
 	glPopMatrix();
 
 	glFlush();
 }
 
-bool flying = false ;
+bool flying = false;
 void stopFly(int a) {
 	flying = false;
 }
 
-bool waving = false;
 void stopWaving(int a) {
 	waving = false;
 }
-
 void animate() {
 
 	if (keyStates['k']) {
+
+		eaten = true;
+
 		waving = true;
 		glutTimerFunc(100, stopWaving, 1);
 
@@ -797,10 +866,10 @@ void animate() {
 
 
 	if (waveOffset > 0 && !waving) {
-		waveOffset -= 1;
+		waveOffset -= 0.58;
 	}
-	else if (waving) {
-		waveOffset += 3;
+	else if (waving && waveOffset < 90) {
+		waveOffset += 0.88;
 	}
 
 
@@ -822,7 +891,7 @@ void animate() {
 
 }
 
-  
+
 void keyboardDown(unsigned char key, int x, int y) {
 	keyStates[key] = true;
 }
@@ -832,12 +901,12 @@ void keyboardUp(unsigned char key, int x, int y) {
 }
 
 int main(int argc, char** argv) {
-	
+
 	glutInit(&argc, argv);
 	glutInitWindowPosition(50, 50);
 	glutInitWindowSize(900, 500);
-	glutInitDisplayMode(GLUT_RGB   );
-	glutCreateWindow("I have kids");
+	glutInitDisplayMode(GLUT_RGB);
+	glutCreateWindow("Hungry penguin!");
 	glutDisplayFunc(display);
 	glutTimerFunc(10, update, 0);
 	//glEnable(GL_DEPTH_TEST);
